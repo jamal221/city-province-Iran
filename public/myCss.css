@@ -1,0 +1,342 @@
+/* fonts  */
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
+
+@font-face {
+    font-family: 'Yekan';
+    src: url('../fonts/Yekan.ttf');
+}
+
+.lalezar {
+    font-family: 'lalezar';
+}
+
+body {
+    font-family: 'Yekan', sans-serif;
+    font-size: 1rem;
+}
+
+/* the used color in site  */
+.color {
+    color: rgb(170, 111, 0);
+}
+
+/* item hover  */
+.item-hover {
+    --b: 0.1em;
+    /* the thickness of the line */
+    --c: rgb(170, 111, 0);
+    /* the color */
+
+    color: #0000;
+    padding-block: var(--b);
+    background:
+        linear-gradient(var(--c) 50%, #000 0) 0% calc(100% - var(--_p, 0%))/100% 200%,
+        linear-gradient(var(--c) 0 0) 0% var(--_p, 0%)/var(--_p, 0%) var(--b) no-repeat;
+    -webkit-background-clip: text, padding-box;
+    background-clip: text, padding-box;
+    transition: .2s var(--_s, 0s) linear, background-size .2s calc(.2s - var(--_s, 0s));
+}
+
+.item-hover:hover {
+    --_p: 100%;
+    --_s: .2s;
+}
+
+.navbar {
+    background-color: transparent;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* background img  */
+.back-img {
+    /* min-height: 350px; */
+    /* background-image: url('./../../images/71429.jpg'); */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* navbar back white color breakpoint  */
+@media screen and (max-width: 768px) {
+    .back-display {
+        background-color: white;
+    }
+}
+
+/* logo back color breakpoint  */
+@media screen and (min-width: 768px) {
+    .logo-img {
+        mix-blend-mode: color-burn;
+        background-color: transparent;
+    }
+}
+
+.section-container {
+    background-color: #1F1B2D;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.mobile-pic {
+    height: 200px;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-display {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .mobile-display-lg {
+        display: none;
+    }
+}
+
+.download-btn {
+    direction: ltr;
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    border-radius: 10px;
+    margin: 15px auto;
+    transition: all .15s;
+}
+
+.download-btn p {
+    font-size: 18px;
+    margin: 0 10px;
+}
+
+.download-btn:hover {
+    transform: scale(1.1);
+}
+
+.about-us-link {
+    text-decoration: none;
+    color: black;
+    font-size: 20px !important;
+}
+
+.footer-icons {
+    cursor: pointer;
+    transition: all .15s;
+}
+
+.facebook-icon:hover {
+    transition: all .15s;
+    color: blue;
+}
+
+.telegram-icon:hover {
+    transition: all .15s;
+    color: rgb(37, 118, 145);
+}
+
+.whatsapp-icon:hover {
+    transition: all .15s;
+    color: green;
+}
+
+.instagram-icon:hover {
+    transition: all .15s;
+    color: lightcoral;
+}
+
+.about-us-link {
+    display: block;
+    all: unset;
+    cursor: pointer;
+    transition: all .15s;
+}
+
+.about-us-link:hover {
+    color: #FF6600;
+}
+
+.links-section {
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    transition: all .15s;
+}
+
+.links-section:hover {
+    color: #FF6600;
+}
+
+#showCitesModal {
+    cursor: pointer;
+}
+
+
+/* start edit | add new styles  */
+.item-container {
+    cursor: pointer;
+    /* width: max-content; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.15s;
+}
+
+.item-icon {
+    background-color: #eeecec;
+    padding: 15px 25px;
+    border-radius: 50%;
+}
+
+.item-container:hover {
+    transform: scale(1.2);
+}
+
+.location-container {
+    cursor: pointer;
+    border: 1px solid grey;
+    padding: 1px 12px;
+    border-radius: 10px;
+    transition: all 0.15s;
+}
+
+.location-container:hover {
+    border: 1px solid red;
+}
+/* Start Slider Style */
+
+.slider {
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease-in;
+    width: 100%;
+}
+
+.slides img {
+    width: 100%;
+    border-radius: 20px;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.carousel-item {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-item.active {
+    opacity: 1;
+}
+
+.navigation {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.navigation button {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.slides>div {
+    min-width: 100%;
+}
+
+/* End Slider Style */
+
+.province-name {
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.province-name .arrow-icon {
+    margin: 0px 5px;
+    /* فاصله بین متن و آیکون */
+}
+
+/* دگمه حدف همه  */
+.deletAll-btn {
+    all: unset;
+    color: #AF3A3A;
+    font-weight: bold;
+    padding: 1px 20px;
+    border-radius: 40px;
+    transition: all .15s;
+}
+
+.deletAll-btn:hover {
+    background-color: #ffbfbf;
+}
+
+/*  */
+/* دگمه شهر های انتخاب شده  */
+.selected-city-btn {
+    all: unset;
+    background-color: rgb(237, 217, 217);
+    color: #AF3A3A;
+    border: 2px solid #AF3A3A;
+    font-weight: bold;
+    padding: 8px 20px;
+    border-radius: 40px;
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+/*  */
+/* اینپوت جستجو  */
+.search-city-input {
+    width: 90%;
+    outline: none;
+    margin: 30px 0;
+    padding: 12px;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+.search-city-input:focus {
+    border: 2px solid #AF3A3A;
+}
+
+/*  */
+/* li لیست شهر ها */
+.list-unstyled li {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row-reverse;
+    align-items: center;
+    font-size: 18px;
+    margin: 5px 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgb(201, 199, 199);
+}
+
+/*  */
+/* تغغیر استایل checkbox ها  */
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: red;
+    transition: all 0.3s;
+}
+
+input[type="checkbox"]:checked {
+    transform: scale(1.2);
+}
+
+/*  */
