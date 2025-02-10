@@ -9,6 +9,9 @@
             <div class="d-flex justify-content-center">
                 <input type="text" placeholder="جستجو شهر" class="search-city-input" onkeyup="searchCity(this.value)">
             </div>
+            <div class="d-flex justify-content-center">
+                <button class="btn-danger" id="selAllCountryBtn">انتخاب همه ی ایران</button>
+            </div>
             <span onclick="CloseModal('mdoalShowCites')" class="w3-button w3-display-topright"
                 style="color: red; font-size:25px;">&times;</span>
         </header>
@@ -16,6 +19,7 @@
             <div class="container my-5">
                 <table class="table table-bordered">
                     <tbody>
+                       
                         @foreach($fetchProvince as $province)
                         <tr class="province-row" id="province-tr-{{$province['id']}}">
                             <td>
@@ -65,18 +69,44 @@
 
 
 <script>
+    // نمایش تعداد شهر های انتخابی بر ریو هدر
+
 let selectedProvinces = JSON.parse(localStorage.getItem('selectedProvinces')) || {};
 let selectedCities = JSON.parse(localStorage.getItem('selectedCities')) || {};
+
+// بررسی و بازیابی مقدار از Local Storage
+let selectAllCountry = localStorage.getItem('selectAllCountry');
+
+// اگر مقدار در Local Storage موجود نبود، مقداردهی پیش‌فرض
+if (selectAllCountry === null) {
+    selectAllCountry = 0; // مقدار پیش‌فرض دلخواه
+} else {
+    selectAllCountry = parseInt(selectAllCountry); // تبدیل رشته به عدد در صورت لزوم
+}
+
+// بروزرسانی نمایش انتخاب‌ها بر اساس مقدار بازیابی‌شده
+updateSelectedCityCount();
+
+// گوش دادن به رویداد کلیک بر روی دکمه "انتخاب همه ی ایران"
+$(document).on('click', '#selAllCountryBtn', function () {
+    removeAllFoTheSelection();
+    // مقداردهی مجدد به selectAllCountry
+    selectAllCountry = -1;
+    // ذخیره‌سازی در Local Storage
+    localStorage.setItem('selectAllCountry', selectAllCountry);
+
+    showSelected();
+    updateSelectedCityCount();
+    // closeModal('mdoalShowCites');
+});
+
 
 // بستن مودال
 const closeModal = (modalId) => {
     document.getElementById(modalId).style.display = 'none';
 };
 
-// نمایش تعداد شهر های انتخابی بر ریو هدر
-document.addEventListener('DOMContentLoaded', (event) => {
-    updateSelectedCityCount();
-});
+
 
 
 // جستجوی چک‌باکس‌ها از طریق فیلد ورودی
@@ -154,6 +184,7 @@ const toggleAllCheckboxes = (source, provinceId) => {
 
 
 const handleProvinceSelection = (provinceId, checkbox) => {
+    localStorage.clear("selectAllCountry");
     const cityCheckboxes = document.querySelectorAll(`#cities-${provinceId} input[type="checkbox"]`);
     if (checkbox.checked) {
         selectedProvinces[provinceId] = true;
@@ -175,6 +206,7 @@ const handleProvinceSelection = (provinceId, checkbox) => {
 };
 
 const handleCitySelection = (provinceId, cityId, checkbox) => {
+    localStorage.clear("selectAllCountry");
     if (checkbox.checked) {
         selectedCities[cityId] = true;
     } else {
@@ -197,7 +229,16 @@ const handleCitySelection = (provinceId, cityId, checkbox) => {
 const showSelected = () => {
     const selectedList = document.getElementById("showSelectedList");
     selectedList.innerHTML = ''; // پاک کردن لیست قبلی
-
+    selectAllCountry=localStorage.getItem('selectAllCountry');
+    if(selectAllCountry==-1){
+        const button = document.createElement('button');
+        button.className = "selected-city-btn";
+        button.dataset.id = -1;
+        button.dataset.type = "ALL";
+        button.onclick = () => removeSelection(button);
+        button.innerHTML = `همه ی ایران <i class="bi bi-x-lg ms-2"></i>`;
+        selectedList.appendChild(button);
+    }
     // ایجاد دکمه‌ها از انتخاب‌های استان
     Object.keys(selectedProvinces).forEach(provinceId => {
         const provinceNameElement = document.querySelector(`.province-name[data-province-id="${provinceId}"]`);
@@ -237,6 +278,7 @@ const showSelected = () => {
 const saveSelection = () => {
     localStorage.setItem('selectedProvinces', JSON.stringify(selectedProvinces));
     localStorage.setItem('selectedCities', JSON.stringify(selectedCities));
+    localStorage.setItem('selectAllCountry',selectAllCountry );
 };
 
 
@@ -260,6 +302,11 @@ const removeSelection = (el) => {
             handleCitySelection(cityCheckbox.dataset.provinceId, id, cityCheckbox);
         }
     }
+    else if (type === 'ALL') {
+        localStorage.setItem("selectAllCountry",0);
+        showSelected();
+        updateSelectedCityCount();
+    }
 };
 
 // حذف تمام انتخاب‌ها
@@ -276,6 +323,9 @@ const removeAllFoTheSelection = () => {
     allCheckboxes.forEach(checkbox => {
         checkbox.checked = false;
     });
+
+    // closeModal('mdoalShowCites');
+    updateSelectedCityCount();
 };
 
 // نمایش انتخاب‌ها در شروع
@@ -307,17 +357,24 @@ document.addEventListener('click', (event) => {
 document.querySelector('.AddCitesToFIlterAndClose').addEventListener('click', displaySelectedCities);
 
 // تابع برای نمایش تعداد شهرهای انتخابی
-const updateSelectedCityCount = () => {
-    let selectedCityIds =  Object.keys(selectedCities);
+function updateSelectedCityCount() {
+    let selectedCityIds = Object.keys(selectedCities);
     const cityCount = selectedCityIds.length;
     const cityCountElement = document.getElementById('firstSelectedCity');
-    if(cityCount>0){
+    selectAllCountry=localStorage.getItem('selectAllCountry');
+    if (selectAllCountry == -1) {
+        cityCountElement.textContent = 'همه ی ایران';
+    } else if (cityCount > 0) {
         cityCountElement.textContent = `${cityCount} شهر`;
-    }else{
-        cityCountElement.textContent="";
+    } else {
+        cityCountElement.textContent = "";
     }
-    
-};
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    showSelected();
+    updateSelectedCityCount();
+});
 
 
 // اطمینان حاصل کنید که این تابع را پس از هر تغییر در انتخاب شهرها فراخوانی کنید
