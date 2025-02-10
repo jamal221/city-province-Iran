@@ -8,7 +8,7 @@
 
 سپس در صفحه ی اصلی برنامه ی خودتان در جای مناسب این تگ را قرار دهید
 
-<div class="d-flex align-items-center location-container" id="showCitesModal">
-        <i class="bi bi-geo-alt fs-3"></i>
-        <p class="fs-4 ps-2 mt-2" id="firstSelectedCity"> </p>
-</div>
+       #   <div class="d-flex align-items-center location-container" id="showCitesModal">
+       #        <i class="bi bi-geo-alt fs-3"></i>
+       #         <p class="fs-4 ps-2 mt-2" id="firstSelectedCity"> </p>
+       #   </div>
